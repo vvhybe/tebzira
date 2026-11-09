@@ -12,6 +12,7 @@ Look at everything you build in a real browser before you claim it works. Screen
 6. Production builds without breaking the dev server
 7. Platform checks
 8. Before every commit
+9. Feel, which screenshots can't show
 
 ## 1. Kickoff: baseline and before captures
 
@@ -65,12 +66,13 @@ Check every section in each of these:
 ```bash
 B=<scratchpad>/prodcheck && rm -rf "$B" && mkdir -p "$B"
 rsync -a --exclude={node_modules,.next,out,dist,.git,.playwright-mcp} ./ "$B"/   # the working tree, uncommitted changes included
-ln -s "$PWD/node_modules" "$B/node_modules"
+cp -a node_modules "$B/node_modules"            # Turbopack refuses a symlink that leaves its root; webpack accepts one
 cp .env "$B/.env" 2>/dev/null || true     # when the build reads env values (prices, store URLs)
 (cd "$B" && ./node_modules/.bin/next build && nohup ./node_modules/.bin/next start -p 3100 > ../prod.log 2>&1 &)
 ```
 
-- Call the framework binary directly in the copy. A package manager run there may rewrite the shared `node_modules/.bin` wrappers with the copy's path (pnpm does), which breaks the repo once the copy is gone.
+- Call the framework binary directly in the copy. With a symlinked `node_modules`, a package manager run there may rewrite the shared `.bin` wrappers with the copy's path (pnpm does), which breaks the repo once the copy is gone.
+- After adding a dependency, `rsync -a --delete node_modules/ "$B/node_modules/"`.
 - For a static export, serve `out/` instead (`npx serve out -l 3100`, or the host's local runner for Functions).
 - **Stopping it:** find the PID by port (`ss -ltnp | grep :3100`) and kill that. `pkill -f` patterns can match your own shell's command line and kill it. The framework's server child keeps the port too; if a restart fails with `EADDRINUSE`, kill it as well, or you'll be testing the old build.
 - When rechecking a rebuilt static site, the browser may serve cached HTML heuristically. Disable the cache or add a `?v=` query.
@@ -81,6 +83,8 @@ cp .env "$B/.env" 2>/dev/null || true     # when the build reads env values (pri
 - **Bot checks:** headless browsers don't get Turnstile tokens on production hosts. Test the form end to end on localhost, or ask the owner to submit once from their browser.
 - **Functions:** run the host's local runner against the production build (for Cloudflare Pages: `npx wrangler pages dev out`) to exercise middleware, redirects and API routes with the production CSP.
 - **Deploy previews:** after pushing, wait for the preview build (`gh pr checks <n>`) and open it. A transient "failed to publish Functions" after assets uploaded is often a host-side hiccup; retry the deployment once before changing code.
+- **`wrangler pages dev` hangs when `out/` is rebuilt under it.** Stop it first. Its `workerd` children keep the port, so find them by process or start on a new port.
+- **`wrangler pages dev` ignores Range requests.** Video seeking can't be tested there; use a small Range-aware server, or the deploy preview.
 
 ## 8. Before every commit
 
@@ -88,3 +92,11 @@ cp .env "$B/.env" 2>/dev/null || true     # when the build reads env values (pri
 - Remove `.playwright-mcp/` artifacts from the repo root; the MCP writes snapshots there.
 - Scan the staged diff for secrets, tokens and env files (only `.env.example` is committed).
 - Stage specific files. Owners keep local drafts in the repo root; `git add -A` sweeps them in.
+
+## 9. Feel, which screenshots can't show
+
+- The owner feels it (direction.md § 10). Your tools can prove it works; they can't prove it feels good.
+- **Trust no frame rate until you have a baseline.** The Playwright MCP browser can run `requestAnimationFrame` near 2 fps on ordinary pages. Measure `example.com` first. One session reported a site bug that was the test browser.
+- **For real timing,** launch your own Chromium from the `playwright-core` in the npx cache: `chromium.launch({ headless: true, args: ['--disable-frame-rate-limit'] })`. Hold gestures, timed reveals and transitions only behave there.
+- **For WebGL,** use `--use-angle=swiftshader --enable-webgl --ignore-gpu-blocklist --enable-unsafe-swiftshader` and drop the frame-limit flag, or screenshots time out. Software rendering proves correctness, never smoothness. Say so in the report.
+- **Count the scroll.** Wheel ticks from the first screen to the first new content. More than about 15 is too many.

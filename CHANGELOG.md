@@ -10,6 +10,8 @@ All notable changes to the skills in this repository. Versions follow [Semantic 
 
 ### Changed
 
+- **site-upgrade**, from a yoga studio redesign where the owner rejected a hero that scored 8.7 from screenshots: a feel gate (the owner scrolls the first screen before the rest is built); discovery starts with the brand file and the owner's other products; scroll never drives video frames, pinned scenes stay near two screens, and no generated sound; people come from real footage and logos are never redrawn; the 404's idea goes in the direction contract; new critique caps, gotchas, owner-feedback rows, a trail-map recipe and WebGL-scene recipes. A film the visitor watches now gets its own player, with a timeline built from what the film is about, instead of the browser default.
+- **site-upgrade** tools: `sprite-from-video.py` cuts a walking person out of footage into a sticker sprite; `page-audit.js` reports descenders running into the next block and captions drifting off their pictures; `slop-scan` adds `scroll-scrub` and `generated-audio`.
 - The collection is now **tebzira** (Marrakchi Darija for spices, and a cook's blend): the repo is `vvhybe/tebzira`, the plugin marketplace is `tebzira` (`/plugin install site-upgrade@tebzira`), and each skill is presented as a recipe. Skill names are unchanged; GitHub redirects the old URL.
 
 ### Docs

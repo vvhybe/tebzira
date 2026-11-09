@@ -117,6 +117,12 @@ const rules = [
   { id: 'bounce-ease', severity: 'warn', kinds: [...CODE_KINDS, 'style'], title: 'Bounce or elastic easing',
     re: /\b(bounce|elastic)\.(out|in|inOut)\b|ease:\s*['"](bounce|elastic)/,
     hint: 'Exponential ease-out for entrances, power4.in for impacts.' },
+  { id: 'scroll-scrub', severity: 'warn', kinds: CODE_KINDS, title: 'Video or image frames tied to the scroll',
+    re: /currentTime\s*=[^=].*(progress|scroll)|(frames|images|sequence)\w*\[\s*Math\.(floor|round)\(.*(progress|scroll)/i,
+    hint: 'It feels like dragging the film. Play video in real time; let the scroll move a mask or a camera (references/motion.md § 2).' },
+  { id: 'generated-audio', severity: 'warn', kinds: CODE_KINDS, title: 'Generated sound',
+    re: /new\s+(window\.)?(webkit)?AudioContext\b/,
+    hint: 'Ambient or generated sound reads as creepy. Remove it unless the owner asked (references/motion.md § 2).' },
 
   // Copy and proof
   { id: 'invented-proof', severity: 'error', kinds: COPY_KINDS, title: 'Social proof that needs a source',

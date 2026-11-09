@@ -13,7 +13,7 @@ Here a tell is a default to refuse, not a law. It is **earned** when the brand's
 - Hairline blueprint frames, corner marks and mono micro-labels, as one system for an infrastructure company, used where they carry structure.
 - T-3, T-2, T-1, T-0 numbering, because the countdown is the content.
 
-To name an earned tell for the scanner, put `site-upgrade-allow: <rule> <reason>` in a comment; it covers its own line and the lines after it up to the next blank line. For a repo-wide exception, add `<rule> <reason>` to a `.site-upgrade-allow` file at the root. Rule ids (`node <skill>/scripts/slop-scan.mjs --list-rules`): `gradient-text`, `violet-gradient`, `glow`, `glass`, `eyebrow`, `numbered-sections`, `emoji-icon`, `decorative-pulse`, `transition-all`, `layout-tween`, `bounce-ease`, `invented-proof`, `fake-people`, `unsourced-uptime`, `placeholder`, `genre-copy`, `vague-cta`, `not-just`, `middot-meta`, `dead-link`, `img-no-alt`, `clarity-id`, `search-params-layout`, `boolean-env`, `secret`, `env-committed`, `reduced-motion`.
+To name an earned tell for the scanner, put `site-upgrade-allow: <rule> <reason>` in a comment; it covers its own line and the lines after it up to the next blank line. For a repo-wide exception, add `<rule> <reason>` to a `.site-upgrade-allow` file at the root. Rule ids (`node <skill>/scripts/slop-scan.mjs --list-rules`): `gradient-text`, `violet-gradient`, `glow`, `glass`, `eyebrow`, `numbered-sections`, `emoji-icon`, `decorative-pulse`, `transition-all`, `layout-tween`, `bounce-ease`, `invented-proof`, `fake-people`, `unsourced-uptime`, `placeholder`, `genre-copy`, `vague-cta`, `not-just`, `middot-meta`, `dead-link`, `img-no-alt`, `clarity-id`, `search-params-layout`, `boolean-env`, `secret`, `env-committed`, `reduced-motion`, `scroll-scrub`, `generated-audio`.
 
 ## Palette and surface
 
@@ -47,6 +47,8 @@ To name an earned tell for the scanner, put `site-upgrade-allow: <rule> <reason>
 | Emoji or Unicode glyphs as icons | One drawn icon library, one stroke and weight |
 | Colored side-stripe borders on cards and alerts | A tone step or nothing |
 | A modal for a task that needs no interruption | Inline, a sheet or its own page |
+| A person drawn from SVG primitives | Cut out of real footage (media.md § 10) |
+| A small hand-redrawn logo inside an illustration | The traced vector, at any size |
 
 ## Motion
 
@@ -58,6 +60,9 @@ To name an earned tell for the scanner, put `site-upgrade-allow: <rule> <reason>
 | Ambient loops everywhere | One moving picture with a purpose and a pause control |
 | A reveal that fails and leaves a blank band | Content visible by default; motion enhances |
 | Bounce easing | Exponential ease-out |
+| Video or image frames scrubbed by the scroll | Real-time video; the scroll moves a mask or a camera |
+| A pinned scene many screens long | About two screens, the next content in sight |
+| Ambient or generated sound, even behind a toggle | None; a video's own sound on request |
 
 ## Copy and proof
 

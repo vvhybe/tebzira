@@ -1,6 +1,7 @@
 // Measures the frame of the current page at the current viewport: one <h1>, headings over two
 // lines, small text, small tap targets (phone widths), unnamed controls, images without alt,
-// sections without a heading, document basics and whether browser surfaces are themed.
+// sections without a heading, document basics, whether browser surfaces are themed, display-type
+// descenders running into the next block, and captions floating off their pictures.
 // Real product fragments and documents (an invoice, an app screen built in HTML) keep their own
 // conventions: mark their root with `data-ui` and the type and tap-target checks skip them.
 // Run it at 1440 and again at 390. Pass as the `filename` of browser_run_code_unsafe.
@@ -97,6 +98,66 @@ async (page) => {
     if (unnamed.length) problem('unnamed-controls', `${unnamed.length}: ${unnamed.slice(0, 5).map(label).join('; ')}`);
     const noAlt = [...document.querySelectorAll('img:not([alt])')].filter(visible);
     if (noAlt.length) problem('img-alt', `${noAlt.length} image(s) without alt: ${noAlt.slice(0, 4).map((i) => i.currentSrc.split('/').pop()).join(', ')}`);
+
+    // Ink: the tails of large type hang outside the box and run into whatever comes next
+    const pen = document.createElement('canvas').getContext('2d');
+    const textRects = [];
+    const big = [];
+    const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let node = textWalker.nextNode(); node; node = textWalker.nextNode()) {
+      const el = node.parentElement;
+      if (!el || !node.textContent.trim() || el.closest('svg, script, style, noscript, [data-ui]') || !visible(el) || srOnly(el)) continue;
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      for (const r of range.getClientRects()) if (r.width > 1 && r.height > 1) textRects.push({ el, r });
+      if (parseFloat(getComputedStyle(el).fontSize) >= 40) big.push({ el, node });
+    }
+    const pictures = [...document.querySelectorAll('img, video')].filter(visible).map((el) => ({ el, r: el.getBoundingClientRect() }));
+    const collisions = new Set();
+    const BLOCK = 'h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption';
+    for (const { el, node } of big) {
+      const s = getComputedStyle(el);
+      pen.font = `${s.fontStyle} ${s.fontWeight} ${s.fontSize} ${s.fontFamily}`;
+      const metrics = pen.measureText('Hg');
+      const box = el.getBoundingClientRect();
+      const range = document.createRange();
+      for (let i = 0; i < node.length; i++) {
+        const ch = node.data[i];
+        if (!/[gjpqyçQJ,;]/.test(ch)) continue;
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        const r = range.getBoundingClientRect();
+        if (!r.width) continue;
+        const scale = r.height / (metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent);
+        const m = pen.measureText(ch);
+        const baseline = r.top + metrics.fontBoundingBoxAscent * scale;
+        const tail = { top: baseline + 2, bottom: baseline + m.actualBoundingBoxDescent * scale, left: r.left, right: r.right };
+        if (tail.bottom - tail.top < 4) continue;
+        for (const other of [...textRects, ...pictures]) {
+          if (other.el === el || el.contains(other.el) || other.el.contains(el)) continue;
+          // lines of one heading may sit tight, and type may sit on a picture that holds all of it
+          if (other.el.closest(BLOCK) === el.closest(BLOCK) && el.closest(BLOCK)) continue;
+          if (other.el.matches('img, video') && other.r.left <= box.left && other.r.right >= box.right && other.r.top <= box.top && other.r.bottom >= box.bottom) continue;
+          const x = Math.min(tail.right, other.r.right) - Math.max(tail.left, other.r.left);
+          const y = Math.min(tail.bottom, other.r.bottom) - Math.max(tail.top, other.r.top);
+          if (x > 2 && y > 2) collisions.add(`"${ch}" of ${label(el)} into ${label(other.el)}`);
+        }
+      }
+    }
+    if (collisions.size) problem('ink-collision', `${collisions.size}: ${[...collisions].slice(0, 5).join('; ')}`);
+
+    // Captions placed on a picture that have drifted off it (a stretched grid item, usually)
+    const adrift = [];
+    for (const figure of document.querySelectorAll('figure')) {
+      const media = figure.querySelector('img, video');
+      if (!media || !visible(media)) continue;
+      const bottom = media.getBoundingClientRect().bottom;
+      for (const child of figure.children) {
+        if (child === media || getComputedStyle(child).position !== 'absolute' || !(child.textContent || '').trim()) continue;
+        if (child.getBoundingClientRect().top > bottom + 2) adrift.push(label(child));
+      }
+    }
+    if (adrift.length) problem('floating-caption', `${adrift.length} caption(s) below their picture, e.g. ${adrift.slice(0, 3).join('; ')} (add items-start to the grid)`);
 
     // Sections without a heading
     const untitled = [...document.querySelectorAll('main section, main > article')]

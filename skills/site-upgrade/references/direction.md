@@ -13,6 +13,7 @@ This file is what worked on shipped sites. If a design-direction skill is instal
 7. Two directions, when the owner is unsure
 8. The direction contract
 9. Copy
+10. The feel gate
 
 ## 1. Find the idea
 
@@ -89,6 +90,8 @@ Spend boldness on one or two moments and keep the rest disciplined. Good places:
 
 Delight lives where people aren't working. Motion that answers the visitor beats motion that performs.
 
+Decide the 404's idea here, in the contract, so it comes from the same world as the hero. On a yoga studio site a plain 404 shipped first and the owner had to ask for a crazy one; the version they loved made the digits streets and the 0 a roundabout, with the visitor walking the teacher back to the studio door.
+
 ## 7. Two directions, when the owner is unsure
 
 Owners sometimes ask for "something different" after a direction has shipped to a branch ("try something more serious and corporate, inspired by these sites"). Then:
@@ -115,3 +118,16 @@ Ask of every part of the plan: would this appear on any similar site? If yes, re
 - When the audience is everyone, link hard terms to an explanation: a customer-facing changelog links "Liquid Glass" to Apple's page; a help center explains "tax ID" inline.
 - No genre verbs (unlock, supercharge, seamless, elevate, effortless, cutting-edge, all-in-one), no "not just X, it's Y", no middle-dot meta strings, no tiny uppercase eyebrow above every heading, no `→` tacked onto link text.
 - Keywords stay platform-neutral when the product is on several platforms ("invoice maker app", not "invoice app for iPhone") until each platform is live.
+- Write the brand exactly as the brand file does, at the start of a sentence too.
+- Never build a section on what a name means until the owner has said so. A "one name, two meanings" section on a guessed etymology was written, shown and then cut.
+
+## 10. The feel gate
+
+Screenshots approve a concept. Only a hand on a scroll wheel approves the mechanism. On a yoga studio site a hero that scrubbed a film with the scroll scored 8.7 from screenshots, and the owner's first words were that it stuttered and felt slow and awkward. Everything hung on it had to be rewired.
+
+Before the sections below the fold and before the inner pages:
+
+1. Build the first screen and the first scroll on the real stack, with the real signature, and nothing else.
+2. Start the dev server, ask the owner to open it in their own browser and on their phone, and ask one thing: does it feel right?
+3. If the idea lands and the feel doesn't, keep the idea and change the mechanism. Write down what they praised, in their words ("vivid, cozy"), and carry exactly that into the next version.
+4. If the owner is away, build only what survives either answer (content layer, SEO, inner pages) and put the gate first in your report.

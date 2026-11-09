@@ -17,24 +17,27 @@ The upgrade is finished when all of these hold, and not before:
 
 - Every claim on the site traces to a source you can name: product code, legal text, the billing system, or the owner's written answer.
 - The design comes from the brand's own material, and its idea fails the competitor test ([direction.md](references/direction.md)).
+- The brand is exact: the name as the brand file writes it, the real logo at every size, the owner's own fonts and colors where they exist.
 - One or two signature moments the visitor does or watches; everything else is disciplined.
 - Nothing needs motion to be seen. With reduced motion, final states show.
 - It was checked in a real browser at 1440, 1920×710, 390 and 320 px, in every theme, with reduced motion, on a production build.
+- The owner has scrolled the first screen in their own browser and approved how it feels, not only how it looks ([direction.md](references/direction.md) § 10).
 - Your written critique scores it 9/10 or higher, or your report says plainly where it falls short ([critique.md](references/critique.md)).
 - It lands as PRs the team can review, with a short update they can paste.
 
 ## Ground rules
 
 1. **Truth before design.** Every feature, number, price, availability date and piece of social proof traces to a source. The product's own onboarding and paywall copy often overpromises: check it in code. "Unknown" is a valid answer: make the slot optional and ask, never fill it with a plausible number. Remove fabricated proof.
-2. **The brand decides the look.** Derive palette, type and the signature device from the brand's own material: logo, name, product UI, videos, place. A device that reads as generated ([tells.md](references/tells.md)) is allowed only when the brand's material or the owner puts it there, and the direction contract names it.
-3. **The product is the hero.** Real UI and real artifacts beat icons, stock 3D and abstractions. A demo looks like the real thing: a real A4 invoice, a real rendered template, the real catalog.
+2. **The brand decides the look.** Derive palette, type and the signature device from the brand's own material: logo, name, product UI, videos, place. Find the brand file and the owner's other products first: they settle the exact name and logo, and often hold the best idea. A device that reads as generated ([tells.md](references/tells.md)) is allowed only when the brand's material or the owner puts it there, and the direction contract names it.
+3. **The product is the hero.** Real UI and real artifacts beat icons, stock 3D and abstractions. A demo looks like the real thing: a real A4 invoice, a real rendered template, the real catalog. A person on the site comes from real footage or photographs, never from drawn primitives.
 4. **A website, not a slide deck.** Avoid stacks of centered heading-plus-image blocks that each fade in. Use composition, pinned scroll stories, layered depth, interactive demos and state-driven motion.
 5. **Never hide content behind motion.** A reveal that never fires leaves a blank page. Respect `prefers-reduced-motion` by showing final states.
-6. **Owner in the loop, not in the way.** Show the direction before the full build. Do the home page first and widen to the other pages once it is approved. Ask each open question once, with options, and keep building around it.
+6. **Owner in the loop, not in the way.** Show the direction before the full build, then let them feel the first screen and first scroll before you build the rest. Do the home page first and widen to the other pages once it is approved. Ask each open question once, with options, and keep building around it.
 7. **Configuration holds values.** Environment variables carry a URL, an ID or a token, never on/off switches or hardcoded constants. Derive dependent values from them. Commit only `.env.example`.
 8. **Follow the target repo.** Read its README, CONTRIBUTING, AGENTS.md and commitlint config. Use its package manager. Match its framework versions (Next 14 vs 16, Tailwind 3 vs 4, React 18 vs 19).
 9. **Secrets and internals stay out.** Never print, commit or echo a token the owner pastes. Public commits and PRs carry no client names, private prices or unfixed security gaps.
 10. **Never call it done below 9/10.** Score the work from screenshots before you report it. A self-rating of 6 or 7 offered after "done" is the sign of skipped work.
+11. **Feel outranks screenshots.** Scroll moves transforms and cameras, never video frames. Pinned scenes stay near two screens. No ambient or generated sound. When an owner likes the idea and rejects how it behaves, keep the idea and change the mechanism.
 
 ## First, pick the mode
 
@@ -57,6 +60,7 @@ Work through the phases in order. Read each reference when you reach its phase, 
 | 0. Kickoff | Branch off the default branch, start the dev server (note the real port), capture the "before" set for the report | [verification.md](references/verification.md) § 1 |
 | 1. Discovery | Audit the site, find the truth sources, write the claims ledger and the subject inventory, collect brand material, report findings | [discovery.md](references/discovery.md) |
 | 2. Direction | Find the idea and pass the competitor test, set palette and type, pick the signature moments, write the direction contract, show it | [direction.md](references/direction.md), [tells.md](references/tells.md) |
+| 2b. Feel gate | Build only the first screen and first scroll on the real stack; the owner opens it and scrolls it; change the mechanism, not the idea | [direction.md](references/direction.md) § 10 |
 | 3. Build it still | Tokens, the hero, each act with real content, the inner pages. Motion off in your head | [building-blocks.md](references/building-blocks.md), [media.md](references/media.md), [read-mode.md](references/read-mode.md) |
 | 4. Motion and signature | One choreographed intro, state-driven moments, the signature. 3D only when it earns its place | [motion.md](references/motion.md), [three-d.md](references/three-d.md) |
 | 5. Contact and conversion | Shared validation, the form, an edge route, a designed notification email, booking or lead prefill | [contact-email.md](references/contact-email.md) |
@@ -77,9 +81,10 @@ Run from the target repo's root. `<skill>` is this skill's folder.
 - `node <skill>/scripts/slop-scan.mjs [dir] [--json] [--strict] [--allow <rules>] [--list-rules]`: scans source for generated-site tells, invented proof, genre copy, dead links, secrets and known traps. Exits 1 on errors (or on warnings with `--strict`). Name an earned exception with a `site-upgrade-allow: <rule> <reason>` comment (it covers the lines below it up to the next blank line) or a `.site-upgrade-allow` file at the repo root. Node 18+, no dependencies.
 - `<skill>/scripts/ssr-audit.sh <base-url> [path]...`: per page (every sitemap page when no paths are given): status, `<h1>` count, JSON-LD blocks, canonical, social image, client-rendering bailouts and the title; then security headers and crawler files. Exits 1 when a page fails. Run it against a production server.
 - `<skill>/scripts/video-prep.sh <source> <out-dir> [name] [poster-second]`: prints scene cuts as chapter candidates and writes silent web encodes with keyframes at each cut, a poster and a square preview clip. Falls back to the `imageio_ffmpeg` binary.
+- `<skill>/scripts/sprite-from-video.py <video> <start> <seconds> <out.webp> --model <file>`: cuts a walking person out of footage with a local segmentation model, finds where the stride loops, and writes a sticker sprite sheet and a preview (media.md § 10). Needs Python with numpy, Pillow and onnxruntime.
 - `<skill>/scripts/playwright/*.js`: for the Playwright MCP `browser_run_code_unsafe` tool. The MCP reads only files inside the workspace, so copy them first (`mkdir -p .playwright-mcp && cp <skill>/scripts/playwright/*.js .playwright-mcp/`) and pass `filename: ".playwright-mcp/<name>.js"`. Keep `.playwright-mcp/` out of git.
   - `reveal-scroll.js` scrolls so every reveal fires before a screenshot and lists text still hidden afterwards.
-  - `page-audit.js` measures the frame: one `<h1>`, headings over two lines, small text, small tap targets, unnamed controls, images without `alt`, untitled sections and unthemed browser surfaces.
+  - `page-audit.js` measures the frame: one `<h1>`, headings over two lines, small text, small tap targets, unnamed controls, images without `alt`, untitled sections, unthemed browser surfaces, display-type descenders running into the next block, and captions floating off their pictures.
   - `overflow.js` finds what causes horizontal scroll from 320 to 1440 px and names the outermost culprits.
   - `console-scan.js` visits every sitemap URL and reports console errors, page errors, failed requests, 4xx/5xx and CSP violations.
 
@@ -100,6 +105,7 @@ Copy into the target repo or the scratchpad and adapt:
 
 Confirm these before publishing anything that depends on them. Ask once with options; don't stall the build:
 
+- the brand file: the exact written name, the logo source, the fonts, and the owner's other products
 - launch status and store availability, from the live store listing rather than env flags
 - prices and plans, and their source
 - figures nobody can source yet (uptime, data centers, customer counts): leave them out until someone signs them off

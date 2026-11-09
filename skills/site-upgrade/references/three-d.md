@@ -10,6 +10,7 @@
 4. Runtime
 5. Personality
 6. Verify
+7. A scene laid out from the page
 
 ## 1. Where the model comes from
 
@@ -20,6 +21,8 @@ Take the highest rung that exists. Ask the owner before you build anything: "do 
 3. **An image-to-3D generator.** Check the licence and the export before you invest: free tiers often show the model, then put the export behind a paywall. Clean up topology and materials afterwards.
 4. **Hand-built primitives,** only for abstract or geometric forms. For anything that represents the brand, approximations get rejected ("a cheap replica with a wide head").
 
+People are never primitives, in 3D or in SVG. A drawn figure of the owner was called cheap; cutting the real person out of their own film was the fix (media.md § 10).
+
 ## 2. The exactness gate
 
 Before anything ships, render the model at the reference's own view (for a logo mark, usually a three-quarter view with a long lens and the camera slightly below) and compare them side by side:
@@ -29,6 +32,8 @@ Before anything ships, render the model at the reference's own view (for a logo 
 - **What the owner asked to drop or keep:** no body, a black visor (not a mirror), no glowing rim, two soft eyes sized to the head (about an eighth of its height).
 
 Iterate on the screenshot until a stranger would say it is the logo come alive.
+
+**A flat logo as layers.** Trace the largest source with potrace at about 1200 px wide, one mask per color. To animate petals, wings or letters, split the traced outline at its valleys, so every outer edge stays exactly as traced and only hidden edges are invented. Overlay the cut on the real logo at 100% before you use it. A logo at any size inside a scene or an illustration is this vector, never a small redraw.
 
 ## 3. From a Blender file to the web
 
@@ -61,3 +66,19 @@ Iterate on the screenshot until a stranger would say it is the logo come alive.
 - WebGL disabled (`--disable-webgl` or a context-loss test): the poster shows.
 - Reduced motion: no idle animation, poster or static pose.
 - The CSP console scan (verification.md) shows no blocked WebAssembly, workers or blob URLs.
+
+## 7. A scene laid out from the page
+
+A full-screen three.js hero that shipped: the logo standing on water at sunrise, the headline reflected in it, and the scroll flying the camera through the logo into a real film.
+
+- **Measure the DOM, then place the world.** Server-render the logo and headline as plain HTML in their final places. Read their rects, set the camera distance so one logo unit equals its CSS size, and draw the headline into a canvas texture at the spans' own rects (a zero-height inline-block probe gives each baseline). First paint and canvas then match at every width, and the phone layout stays in CSS.
+- **Keep the real `<h1>` under the canvas.** Don't fade it to `opacity: 0`; hide it only when the canvas fades away at the end. `page-audit.js` reports zero headings otherwise.
+- **Lens shift, not tilt.** `camera.setViewOffset(W, H, 0, H / 2 - horizonY, W, H)` moves the horizon without keystoning, so the plane at `z = 0` still maps linearly to pixels.
+- **A planar reflection in a dozen lines.** Mirror the camera to `-y`, copy the projection and negate `elements[5]`, render everything above the water into a half-size target, and sample it in the water shader at `gl_FragCoord.xy / resolution` plus a ripple offset. Fade the ripple with distance, or far water aliases into a comb.
+- **Painter's order for layered flat scenes.** `depthTest: false`, `depthWrite: false`, `side: DoubleSide` and `renderOrder`. No z-fighting between layers a hair apart.
+- **Exact brand colors.** `ColorManagement.enabled = false`, `renderer.outputColorSpace = LinearSRGBColorSpace`, textures `NoColorSpace`.
+- **Canvas text:** `texture.premultiplyAlpha = true`, or edges get a white fringe.
+- **Lettering:** `ShapePath.toShapes()` filled the counters of a script face. Sort the rings by area, nest them by point-in-polygon, and treat odd depth as a hole.
+- **Film through a window.** Sample the video in screen space with the same maths as `object-fit: cover`. When the window covers the screen, fade the canvas: the `<video>` beneath is pixel-identical.
+- **The still page.** No WebGL, data saver, reduced motion or `webglcontextlost` all fall back to the server-rendered page.
+- **First-paint picture.** Capture it from the scene itself, without the logo and text meshes. Never `display: none` the DOM boxes the scene measures, or the capture comes out blank.

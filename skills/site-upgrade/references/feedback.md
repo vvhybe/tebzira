@@ -32,6 +32,11 @@ Owners rarely speak in design terms. They say "not enough spice" or "it looks ch
 | "I don't have those numbers now, but we can add them later." | Unknown, not zero. | Remove the figure, make the component accept an empty value, and send a fact-check form. |
 | "Why add them as secrets? They're links." | Over-engineering public config. | Public values are plain env values; only real secrets are secrets. |
 | "Make it an env, to make things standard." | A boolean switch or a hardcoded constant. | An env var that holds the value (a URL); empty means off (a greyed "Coming soon"). |
+| "The idea is good but it's not practical. It feels stuttery, slow, awkward." | The concept is approved and the mechanism is rejected. | Keep the idea and what they praised. Replace how it moves (motion.md § 2). Don't defend it and don't restart. |
+| "Creepy noise sound." | Sound nobody asked for. | Remove it. |
+| "It's a joint SVG, that's cheap these days." | A drawn character. | Real material: cut the person out of their own footage (media.md § 10). |
+| "The name is actually X." "Use the exact logo, not a miniature." | Brand details taken from a weak source or redrawn. | Go to the brand file and fix every instance. Drop any copy built on the wrong reading. |
+| A batch of screenshots with short notes | They are pointing at pixels. | Fix each one, then hunt the same class of defect elsewhere: the same images held two more. |
 
 ## 2. How owners like to work
 
@@ -43,6 +48,9 @@ Owners rarely speak in design terms. They say "not enough spice" or "it looks ch
 - **Stacked PRs** for separable work (the redesign, then SEO), and a merge order when there are several.
 - **Their consent is specific.** "Push and open PRs" is not "merge" and not "change the domain". Ask for each new kind of outward step.
 - **Explanations for them only** when they ask how something works ("elaborate for me so I can follow along"): plain, short, no jargon.
+- **Ideas arrive mid-build, and they are often better than yours.** A hand-drawn trail map with a tiny walking character came in the middle of a turn. Say yes in one line, fold it in, keep going.
+- **"Tell me if you need a tool."** Answer with one recommendation, the exact file, source and size or price, and a no-tool fallback. Check balances first; a connected service may have no credits.
+- **Numbered questions at the end of a report** come back as numbered answers within minutes.
 
 ## 3. What owners approved
 
@@ -56,3 +64,6 @@ Owners rarely speak in design terms. They say "not enough spice" or "it looks ch
 - A 404 that is a game (a singularity, a press-and-hold big bang) or a joke in the product's own language (a NOT FOUND stamp on an invoice).
 - A corporate direction inspired by large infrastructure sites, with the first direction's best moments kept.
 - A help center that relates every guide to a real screen, in the app's own icons and tones.
+- The logo standing in a live scene built from art the owner already had.
+- The real person, cut out of their own film, walking a hand-drawn map, with their own words in speech bubbles.
+- A 404 that is a tiny game in the site's own world.

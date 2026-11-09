@@ -26,6 +26,8 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **Buttons lowercase their labels**: a `.btn` that lowercases and re-capitalizes breaks "FAQ"; use `normal-case` on those labels.
 - **The phone menu ghosts the hero through it**: make the panel solid.
 - **A long word overflows in one language**: check every locale's headings at 320.
+- **Descenders run through the next block**: at a line-height near or under 1, the tails of j, p, y and g hang outside the box at display sizes. Give the line-height or margin room for about 0.3em. `page-audit.js` reports it as `ink-collision`.
+- **Captions float away from their photos**: a grid row stretches the `<figure>`, and an absolutely placed caption follows the figure's bottom, not the image's. Add `items-start` to the grid.
 
 ## Motion and media
 
@@ -35,6 +37,9 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **A slot roll spins backwards when it wraps**: duplicate the first item at the end, then snap back without a transition on `transitionend`.
 - **A "changed" flash fires everywhere on the first edit**: track change per value with derived state, not with a global "armed" flag.
 - **Descenders clipped in masked headline reveals**: add bottom padding and an equal negative margin to the mask.
+- **White fringes around text in WebGL**: a `CanvasTexture` uploads unpremultiplied. Set `premultiplyAlpha = true` (three-d.md § 7).
+- **A logo's counters fill in when triangulated**: `ShapePath.toShapes()` guessed the holes wrong for a script face. Nest the rings yourself with an even-odd rule.
+- **A re-encoded video is over Cloudflare Pages' 25 MiB per-file limit**: a 90-second reel at CRF 26 came out at 44 MB. Use a target bitrate (`-b:v 1500k`) and check the size.
 
 ## Next.js, static exports and the edge
 
@@ -45,10 +50,11 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **Social-card URL inside a route group is hashed** (`/fr/opengraph-image-k0kfef`): never hard-code it. A Node-only image route in a group is inherited by edge-runtime children and breaks their build.
 - **"Missing `<html>` and `<body>` tags in the root layout"**: when a `[lang]` layout renders `<html>`, the root layout renders none, so anything rendered through the root alone (`app/not-found.tsx`, `app/page.tsx`) must bring its own document or redirect.
 - **`next dev` throws "missing param in generateStaticParams" with `output: 'export'`** for an address the catch-all matches but no page exists for: that's the dev check; production serves the 404. Set `dynamicParams = false` where only listed params exist.
+- **One language at the root and another under `/en/`, with no middleware**: use route groups `(fr)` and `(en)`, each with its own root layout, and `experimental.globalNotFound` with `app/global-not-found.tsx` for a branded `404.html`.
 - **Full-stack adapters fail on static routes** (for example "Invalid prerender config" for every `[lang]` route, or npm peer-dependency errors after a tooling update): a static export plus a few Functions is usually the reliable path on Cloudflare Pages.
 - **Pages Functions bundle with their own wrangler version**, which honors the root `tsconfig` (`"jsx": "preserve"` breaks email templates): give the templates folder its own `tsconfig.json` with `"jsx": "react-jsx"`.
 - **`wrangler pages dev --proxy` applies the production CSP to `next dev` pages**, which need eval, so they crash. Test Functions against a production build instead.
-- **Turbopack serves stale state** (a renamed token, a route that moved between groups): touch `next.config.*` to restart the dev server, and verify markup changes on a production build.
+- **Turbopack serves stale state** (a renamed token, a route that moved between groups, a 500 quoting code no longer in the file): touch `next.config.*` to restart the dev server. If that isn't enough, stop it by port and remove `.next/dev`. Verify markup changes on a production build.
 - **Next 16's `next dev` appends an agent-rules block to `AGENTS.md`**: `agentRules: false` in the config stops it. Keep it out of PRs unless the owner wants it.
 - **IDE "canonical class" warnings** (`max-w-[540px]` as `max-w-135`) are suggestions; match the codebase.
 
@@ -79,6 +85,8 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **`echo ======` fails in zsh** (`=` expansion): quote it.
 - **`kill $(ps … | grep pattern)` can kill your own shell**: the pattern matches the command line running it. Find servers by port (`ss -ltnp | grep :PORT`).
 - **`cd` inside a tool call** can move the session's working directory; use absolute paths or subshells.
+- **`set -- $var` doesn't split in zsh**: put word-splitting loops in a `bash` script. `du` may be aliased too: `command du`.
+- **`python3 -I` drops user site-packages**: a script that needs them adds the path itself.
 - **`git rm` refuses files with local changes**: use `rm` and let the deletion show in `git status`.
 - **A local `main` lags after squash merges**: fetch and compare with `origin/main`.
 - **`yarn -s` isn't valid in Yarn 4**: use plain `yarn <script>`.
@@ -98,3 +106,4 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **Env flags say "live" but the store disagrees**: ask the owner and check the live listing.
 - **Two documents disagree on a fact** (a phone number, an address): the public business profile or the legal entity's own record wins; keep every copy identical.
 - **Localized store prices look wrong** (a storefront shows a different number than the base price): stores set per-country prices including tax. Quote the base price and say the store shows the local one.
+- **A live clock shows the wrong hour**: local time rules change, and browser time-zone data lags them. Morocco left GMT+1 for good on 20 September 2026, while `Africa/Casablanca` could still return the old offset. Search for the current rule and keep the zone in one constant.
