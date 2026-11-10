@@ -24,6 +24,10 @@ Competitor test: <nearest competitor> → <why the sentence fails for them>
 
 **Live thing:** <what the visitor can do with real content>
 
+**404:** <the idea, from the same world as the hero>
+
+**Feel gate:** <what the owner will open and scroll, and when>
+
 **Brand exceptions:** <each tell kept on purpose, and the brand material or owner decision that earns it>
 
 **Proof:** <which ledger claims each section carries>

@@ -31,6 +31,8 @@ Open the desktop screenshots first, then the phone ones. Make each pass on its o
 12. **Truth.** Is every claim on screen in the claims ledger as shipped? Any number without a source?
 13. **Motion and states.** With reduced motion, is everything visible? Did any reveal leave a blank band? Do hover, focus, loading and error states exist and look designed?
 14. **The contract.** Hold the build against the direction contract: does the first viewport match, did the signature land, are the brand exceptions the only tells?
+15. **Ink.** Look where display type ends. Do the tails of j, p, y and g touch the block below, or a picture?
+16. **Feel.** Screenshots can't judge it. Has the owner scrolled it? If not, your score covers looks only: write that next to it.
 
 ## 2. The score
 
@@ -60,6 +62,10 @@ These override the arithmetic.
 - The same fade on every block, or a page that barely moves: **design ≤ 7**.
 - Two or more mostly empty desktop screens, or running text small and grey: **design ≤ 6.5**.
 - Any placeholder (grey box, lorem, "Image here"): **content ≤ 5**.
+- The brand's name or logo not as the brand file has it: **overall ≤ 5**.
+- Video or image frames scrubbed by the scroll, or a pinned scene over about two screens: **usability ≤ 6**.
+- A descender or ascender of display type touching another block: **design ≤ 7**.
+- A drawn person or a redrawn logo where real material exists: **design ≤ 7**.
 
 ## 4. Writing a round
 

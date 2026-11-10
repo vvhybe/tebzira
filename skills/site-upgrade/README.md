@@ -218,7 +218,7 @@ site-upgrade/
 │   ├── delivery.md           PRs, team update, before/after report, DESIGN.md
 │   ├── feedback.md           what owners say, and what to change
 │   └── gotchas.md            traps hit on real sites, with fixes
-├── scripts/                  slop-scan, ssr-audit, video-prep, Playwright checks
+├── scripts/                  slop-scan, ssr-audit, video-prep, sprite-from-video, Playwright checks
 ├── assets/                   email renderer, JSON-LD tag, scroll refresh, templates
 └── evals/                    prompts and expectations for testing the skill
 ```

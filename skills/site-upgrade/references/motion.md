@@ -16,7 +16,7 @@ Motion goes on after the site works still. It answers the visitor or tells the s
 - **One choreographed intro**, run once: masked line reveals, layered entrances, then the signature moment (a seal slamming with `power4.in`, a page jolt, an ink ring).
 - **User-driven:** pointer depth on hero layers, hover sheen, magnetic calls to action, drag and keyboard on galleries.
 - **State-driven:** live demos, tiles that play once when scrolled into view (with a replay), stories that follow scroll and advance on their own after the visitor lingers.
-- **Scroll-linked:** a scene that lifts or opens as you scroll (`scrub`), a trajectory that fills.
+- **Scroll-linked:** transforms, opacity, a camera move. A scene that lifts or opens as you scroll (`scrub`), a trajectory that fills. Never video frames (§ 2).
 - **One or two signature moments** (direction.md § 6). Never several competing ones.
 
 Avoid identical fade-ups on every block, ambient loops everywhere, hover lift on every card, bounce easing, and any reveal that could fail to fire.
@@ -29,6 +29,10 @@ Avoid identical fade-ups on every block, ambient loops everywhere, hover lift on
 - Calm beats clever. A 3D-flip dialog was rejected as "jerky"; a sheet that slides was praised.
 - Keep the footer, the closing call to action and anything near the bottom free of scroll reveals. Short screens may never scroll far enough to trigger them.
 - Every moving thing that lasts more than five seconds can be paused.
+- **Never tie video or image-sequence frames to the scroll.** It looks perfect in screenshots and feels like dragging the film by hand. A 312-frame walk over a 700svh pin was rejected on first touch. Let video play in real time, and let the scroll move a mask, a window or a camera around it.
+- **Pinned scenes stay short.** About two screens of travel. Count the wheel ticks: if more than about 15 pass before new content arrives, cut it.
+- **No ambient or generated sound.** A noise bed behind a toggle was called creepy and removed. A video's own sound, on request, is fine.
+- **Time-based, not frame-based.** Damping and press-and-hold use the elapsed time (`1 - Math.exp(-dt * k)`), so a slow device arrives at the same moment.
 
 ## 3. The toolkit
 
@@ -51,6 +55,7 @@ Avoid identical fade-ups on every block, ambient loops everywhere, hover lift on
 - **Re-keyed rise-ins.** Changing a React `key` remounts an element and replays its CSS animation: the cheapest way to animate a caption change or a "changed" flash.
 - **Magnetic call to action.** Use the CSS `translate` property (not `transform`) so it composes with other transforms; fine pointers only; release with a spring-like ease.
 - **Refresh after layout changes.** Scroll triggers measure once. Accordions, tabs, fonts and late images move things. Mount `assets/ScrollTriggerRefresh.tsx` once in the layout.
+- **A character walking a map.** Position comes from the scroll: sample the trail once, then look up the point at the map height under a fixed line on screen, so the character keeps pace with the page. The stride is a CSS `steps()` animation that slides a strip behind a small window (compositor only), and it runs only while the character moves. Standing still shows its own cell. Mirror it by direction of travel. Where the strip comes from: media.md § 10.
 
 ## 5. Reduced motion
 

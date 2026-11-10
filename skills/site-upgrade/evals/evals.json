@@ -83,6 +83,20 @@
         "Uses the studio's real work as the hero rather than stock imagery",
         "Does not invent clients, awards, testimonials or figures"
       ]
+    },
+    {
+      "id": 8,
+      "prompt": "Redo my yoga studio's website, something crazy, award level. The current site is saved as site.html. I also built her dashboard in ../studio-dashboard. There's a reel of her walking to the studio in assets/reel.mp4.",
+      "expected_output": "Reads the dashboard first for the exact brand name, logo, fonts and any existing art. Proposes one idea from the owner's own material, then builds only the first screen and first scroll and asks the owner to open and scroll it before building the rest. Uses the reel as real-time video and never ties its frames to the scroll. Adds no generated sound. Plans the 404 in the direction contract.",
+      "files": [],
+      "expectations": [
+        "Reads the sibling dashboard for the written name, logo, fonts and existing art before designing",
+        "Stops at a runnable first screen and first scroll and asks the owner to feel it before building other pages",
+        "Does not scrub video or an image sequence with the scroll, and keeps any pinned scene near two screens",
+        "Adds no ambient or generated audio",
+        "Does not explain or split the brand name without the owner's confirmation",
+        "Names the 404's idea in the direction contract"
+      ]
     }
   ]
 }

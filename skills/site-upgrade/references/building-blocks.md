@@ -85,6 +85,16 @@ Re-key the caption on each chapter change to replay its rise-in. Add a magnetic 
 
 An onboarding sequence (T-3, T-2, T-1, T-0) is a scroll the visitor walks through, not tabs they may skip. A trajectory line fills with scroll, each station pings a ring as it is reached, and the mascot travels or reacts. On phones, check that markers and progress bars never sit on top of the mascot or the copy at any scroll position.
 
+### Trail map with a walking character
+
+A way to show how to reach a place, or any route through a story, that a yoga studio's owner proposed in place of a guided video.
+
+- **Draw it once, by script.** `roughjs` run at build time gives hand-inked shapes. Write the result to a static SVG and show it as an `<img>`. Keep labels that need translating in a live layer on top.
+- **Use the owner's route and landmarks.** Every building is one a visitor will really pass. Say "not to scale" on the map.
+- **Layers.** The art, then an SVG with the dotted trail and a solid walked line, then postcards, then the character.
+- **Postcards.** One short silent loop per landmark, cropped clear of any burned-in caption, playing only while on screen. Outer columns on desktop, so the trail stays clear; towards the middle on phones, where the map is cropped.
+- **The character** keeps pace with the page (motion.md § 4) and says the owner's real words in a bubble at each stop.
+
 ## Showing the product
 
 ### Live UI tiles
@@ -204,7 +214,7 @@ An embedded scheduling iframe clashes with the design and widens the CSP. Proxy 
 - **FAQ explorer.** Search that opens matching answers, a category rail tracked by IntersectionObserver, a grid-rows accordion and a contact fallback when nothing matches. On phones the grid needs `grid-cols-1` and `min-w-0` on the rail, or the chip row overflows the page. Link answers to the help center's guide where one exists.
 - **Changelog.** Built from git tags, the CHANGELOG and release milestones, dated by the store's release days, written for customers rather than developers, with hard terms linked to an explanation. An RSS feed lets followers subscribe. Keep it on the marketing site and link it from the help center.
 - **Legal pages.** A quiet closing card with ways to get help. Keep acronyms like "FAQ" intact if the button styles change case (`normal-case`).
-- **404.** A signature moment, not a dead end (direction.md § 6), with real exits and `robots: noindex`.
+- **404.** A signature moment, not a dead end (direction.md § 6), with real exits and `robots: noindex`. Make it a small toy from the site's own world: something the visitor can do, not only look at.
 
 ## Experience mode: portfolios and showcases
 

@@ -11,6 +11,7 @@
 7. Rendering SVG or HTML to PNG
 8. Fonts for social cards
 9. Protecting proprietary assets
+10. Characters from real footage
 
 ## 1. ffmpeg without a system install
 
@@ -30,6 +31,10 @@ A 14 MB 1080p60 product reel came down to 1.9 MB WebM and 3.0 MB MP4. Pin exact 
 Serve WebM first, then MP4, with `playsInline muted loop preload="metadata"` and the poster. Play only while on screen (an IntersectionObserver at 0.5), never autoplay under reduced motion, and keep a pause button. A reel made for phones (portrait) wants the full screen on phones (building-blocks.md § Scroll story).
 
 When the product's UI changes, check the reel: a finished video with no source project can't be patched. Flag it as stale rather than claiming the site is up to date.
+
+**A film the visitor watches gets its own player.** The browser's default controls are the most stock thing left on a designed page, so raise it before the owner does. Build the timeline from what the film is about: a route film's timeline is the route, a recipe's is its steps, a talk's is its chapters. Keep everything a player owes the visitor: a poster with one obvious start, tap to pause, a seek control that is `role="slider"` with arrow keys and pointer capture, mute, fullscreen (iPhone only offers `webkitEnterFullscreen` on the video element), chapter links that stay in sync, a waiting state, an error state that links to the file, and an end card with the next action.
+
+Three details decide whether it feels right. With `preload="none"` a chapter click arrives before the metadata, so hold the time and apply it in `loadedmetadata`. Hard-code the known duration so chapter marks are right before the first byte. While playing, write the moving parts to the DOM from one `requestAnimationFrame` loop and re-render React only when the second or chapter changes. Test seeking against a server that answers Range requests, because one that doesn't sends every seek back to zero.
 
 ## 3. Images
 
@@ -89,3 +94,15 @@ When the site shows something the company sells (templates, designs, a dataset),
 - **Licence holds:** skip any item whose source marks it not for publication (third-party fonts or art without a publishing licence) and list what was held.
 - **Tests enforce it:** a test that fails when a source file, an oversized image or a held item appears in `public/`.
 - Watermarks are a last resort: they make thumbnails ugly, and owners usually drop them.
+
+## 10. Characters from real footage
+
+A person drawn from SVG primitives reads as cheap, however careful ("a joint SVG"). Cut the real person out of the owner's footage instead, the way fighting games digitized their actors. On a hand-drawn map, a white die-cut edge makes the cut-out read as a sticker someone placed there on purpose. A seven-frame stride came to 56 KB.
+
+1. Pick a stretch where they walk in full view, with no caption over them and nobody crossing. Walking away from the camera suits a "follow them" story.
+2. Ask the owner before downloading the model (`u2net_human_seg.onnx`, 176 MB, from the rembg releases on GitHub). Keep it in its own folder outside the project.
+3. Run `scripts/sprite-from-video.py <video> <start> <seconds> <out.webp> --model <file> --idle-at <seconds>`.
+4. Read `<out>-preview.jpg`. A person model keeps whatever touches the person, so road signs and passers-by come along. Re-run with `--skip` for those samples.
+5. Play it at the footage's own pace (the script prints the `steps()` values). Frames sampled every third video frame at 30 fps run at real speed at 10 per second.
+
+**Logos inside other art are never redrawn,** even at 60 px on a door in an illustration. Place the traced vector (three-d.md § 2).

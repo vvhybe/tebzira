@@ -31,6 +31,11 @@ Goal: know what the company or product really is before designing anything. End 
 
 Ask the owner where these live if they aren't obvious.
 
+- **The brand file and the owner's other products.** Do this first. Ask where the brand file is and which other repos or products exist (an app, a dashboard, an admin, a login screen), then read them for:
+  - **The exact written name,** casing included. A caption, a domain or a map listing is a weak source: on a yoga studio site the agent took a shortened name from a video caption, and the owner had to correct it after the build. Never split a brand name, translate it or explain what it means unless the owner wrote that.
+  - **The logo source** and its layers, at the highest resolution there is.
+  - **Fonts and palette** as they exist in code, often with a comment saying where they came from.
+  - **Art already built:** login screens, error pages, illustrations. That studio's admin login was a dawn scene over the local mountains, and it became the site's hero. The owner's taste is already built somewhere.
 - **Product source code.** Launch a read-only exploration agent in the background with a concrete brief and a word limit, asking for file paths with every answer:
   - stack and platforms; what the product does (for an app: the document types and what converts into what)
   - customization options and the brand palette and fonts
@@ -72,6 +77,7 @@ List eight to twelve things that belong to this company and no competitor. The i
 - **The numbers** from the ledger.
 - **The constraint** it lives with: by appointment only, one batch a month, a single platform at launch.
 - **The printed things of its world:** a receipt, a ticket, a stamp, a mission patch.
+- **The art they already made:** login and error screens, illustrations and mascots in their other products.
 
 ## 5. Collect brand material
 

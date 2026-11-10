@@ -33,7 +33,7 @@ test('visual, copy and motion tells are found', () => {
   for (const rule of [
     'gradient-text', 'violet-gradient', 'glow', 'glass', 'eyebrow', 'emoji-icon', 'genre-copy', 'vague-cta',
     'not-just', 'middot-meta', 'dead-link', 'img-no-alt', 'bounce-ease', 'layout-tween', 'unsourced-uptime',
-    'reduced-motion',
+    'reduced-motion', 'scroll-scrub', 'generated-audio',
   ]) assert.ok(found.has(rule), `missing ${rule}`);
 });
 
