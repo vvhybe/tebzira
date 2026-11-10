@@ -12,6 +12,7 @@
 8. Fonts for social cards
 9. Protecting proprietary assets
 10. Characters from real footage
+11. Sound made in the browser
 
 ## 1. ffmpeg without a system install
 
@@ -106,3 +107,13 @@ A person drawn from SVG primitives reads as cheap, however careful ("a joint SVG
 5. Play it at the footage's own pace (the script prints the `steps()` values). Frames sampled every third video frame at 30 fps run at real speed at 10 per second.
 
 **Logos inside other art are never redrawn,** even at 60 px on a door in an illustration. Place the traced vector (three-d.md § 2).
+
+## 11. Sound made in the browser
+
+When an experience needs sound, make it with the Web Audio API instead of shipping files: nothing to license, nothing to load, and it can follow the experience in real time.
+
+- **A drone** of a few detuned oscillators (open fifths, no third, so it is neither happy nor sad) through a low-pass filter that opens and closes with the experience.
+- **A texture** for tension: looped pink noise (Paul Kellet's filter) through a band-pass, faded as the tension resolves. Keep it soft, like wind; harsh noise reads as creepy.
+- **A bell**: a few sine partials at non-harmonic ratios (1, 2.71, 5.15, 8.42 for a singing bowl) with exponential decays, through a generated room (a convolver fed decaying noise). Drop the upper partials for a muffled strike.
+- **A limiter** (`DynamicsCompressor`) before the output, and a fade in over two seconds.
+- **Start it from the visitor's click** (browsers require it), show a visible on/off toggle, and remember the choice. An iPhone's silent switch mutes it.

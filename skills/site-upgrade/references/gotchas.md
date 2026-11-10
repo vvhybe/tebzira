@@ -28,6 +28,8 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **A long word overflows in one language**: check every locale's headings at 320.
 - **Descenders run through the next block**: at a line-height near or under 1, the tails of j, p, y and g hang outside the box at display sizes. Give the line-height or margin room for about 0.3em. `page-audit.js` reports it as `ink-collision`.
 - **Captions float away from their photos**: a grid row stretches the `<figure>`, and an absolutely placed caption follows the figure's bottom, not the image's. Add `items-start` to the grid.
+- **A phone layout passes at 390×844 and breaks on a real phone**: browser toolbars leave about 553 to 760 px. A logo placed at `top: 25svh` next to a headline sized in `vw` collides once the screen is short. Derive one from the other in CSS (the logo's top from the headline's computed height) and shrink the art before the gap closes.
+- **The brand mark is cropped**: a hand-set `viewBox` narrower than the artwork clips its widest parts, and icons made from it inherit the crop. Frame it from `getBBox()` of every layer.
 
 ## Motion and media
 
@@ -40,6 +42,11 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **White fringes around text in WebGL**: a `CanvasTexture` uploads unpremultiplied. Set `premultiplyAlpha = true` (three-d.md § 7).
 - **A logo's counters fill in when triangulated**: `ShapePath.toShapes()` guessed the holes wrong for a script face. Nest the rings yourself with an even-odd rule.
 - **A re-encoded video is over Cloudflare Pages' 25 MiB per-file limit**: a 90-second reel at CRF 26 came out at 44 MB. Use a target bitrate (`-b:v 1500k`) and check the size.
+- **Stopping mid-transition shows a half-blend**: a canvas faded by the scroll over the video it hands over to. Give the end state a pinned stop, and switch with a short timed fade at a threshold, with a gap before it reverses.
+- **`vector-effect: non-scaling-stroke` breaks a draw-in**: with `pathLength="1"`, the dashes are measured in screen space and only part of each line ever draws. Set the stroke width in the drawing's own units.
+- **A CSS custom property won't transition**: register it with `@property` and give it the transition only in the state that needs it, or every per-frame write lags behind.
+- **A leftover always-on component** (a line, a cursor, particles, its pause button) outlives the concept it was built for. Audit them after a direction changes.
+- **A pause button that pauses only part of the page**: WCAG 2.2.2 asks for one control over everything that moves on its own. Put it in the menu, mirror it as a class on `<html>` for CSS animations, give canvas, WebGL and video an `isPaused()` check and a subscription, and restore it in the first-paint script. Something the visitor started keeps running.
 
 ## Next.js, static exports and the edge
 
@@ -57,6 +64,10 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **Turbopack serves stale state** (a renamed token, a route that moved between groups, a 500 quoting code no longer in the file): touch `next.config.*` to restart the dev server. If that isn't enough, stop it by port and remove `.next/dev`. Verify markup changes on a production build.
 - **Next 16's `next dev` appends an agent-rules block to `AGENTS.md`**: `agentRules: false` in the config stops it. Keep it out of PRs unless the owner wants it.
 - **IDE "canonical class" warnings** (`max-w-[540px]` as `max-w-135`) are suggestions; match the codebase.
+- **Function props from a server component to a client one** fail at build. Pass nodes, or make the host a client component. `react-hooks/refs` also flags passing a callback that touches refs into a function called during render.
+- **A new page key in a typed route map** (`satisfies Record<PageKey, …>`) forces its metadata in every language: good. The sitemap picks it up, and its social card must exist too.
+- **`global-not-found.tsx` declares no icons**, so the browser asks for `/favicon.ico` and logs a 404. Give it the same `icons` metadata as the pages.
+- **Cloudflare Pages preview aliases cut branch names to 28 characters** (`feat-patterns-and-gentle-lin`). Take the link from the bot's comment (`gh api repos/:owner/:repo/issues/<n>/comments`).
 
 ## Mobile browsers
 
@@ -76,6 +87,8 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 
 - **Grooves on a model that looked fine in Blender**: inward-facing faces. Flip them in the export script.
 - **Draco or meshopt models fail to load**: their decoders need WebAssembly, which a CSP without `'wasm-unsafe-eval'` blocks.
+- **WebGL 1 fragment shaders have no `fwidth`** without `OES_standard_derivatives`: get the pixel size from the resolution uniform.
+- **A pinned scene keeps rendering where nobody sees it**: behind a modal, during a film it handed over to, off screen. Pause it in each case.
 - **The mascot looks different in each section**: one lighting setup and one camera language for every placement.
 
 ## Shell and tooling
@@ -96,6 +109,11 @@ Traps hit on real upgrades. Search this file when something behaves oddly.
 - **The Playwright MCP refuses a `filename` outside the workspace**: copy the script into `.playwright-mcp/`. A trailing `;` after the function gives "Unexpected token ';'".
 - **`ffprobe` isn't installed**: `ffmpeg -i <file>` prints the stream info.
 - **React 19 ignores `defaultProps` on function components**: icon libraries that set size and color that way draw nothing; wrap them once with explicit defaults and import only the wrapper.
+- **Staging part of a file**: `git apply --cached` on the hunks of `git diff -U1` that match. When two edits share a hunk, stage an intermediate file with `git hash-object -w` and `git update-index --cacheinfo`. Never pass `--` to a keyword filter on CSS: every custom property contains it.
+- **`grep -E '^[-+][^-+]'` hides Markdown bullets** (`+- **…`): use `'^[-+] '` or read the diff.
+- **A selector like `footer` matches the `<footer>` inside a blockquote**: use `body > footer`.
+- **Generated icons and social cards carry a scrollbar**: a screenshot of a scrollable page includes it. Size the viewport to the image, hide overflow, and look at the edges.
+- **A screenshot taken during a WebGL fade captures both layers** and looks like a bug. Wait for the canvas to settle, and for any arrival animation, before judging.
 
 ## Copy and claims
 

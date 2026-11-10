@@ -20,7 +20,7 @@ The upgrade is finished when all of these hold, and not before:
 - The brand is exact: the name as the brand file writes it, the real logo at every size, the owner's own fonts and colors where they exist.
 - One or two signature moments the visitor does or watches; everything else is disciplined.
 - Nothing needs motion to be seen. With reduced motion, final states show.
-- It was checked in a real browser at 1440, 1920×710, 390 and 320 px, in every theme, with reduced motion, on a production build.
+- It was checked in a real browser at 1440, 1920×710, 390 and 320 px and at the heights real phone browsers leave (about 553 to 760 px tall), in every theme, with reduced motion, on a production build.
 - The owner has scrolled the first screen in their own browser and approved how it feels, not only how it looks ([direction.md](references/direction.md) § 10).
 - Your written critique scores it 9/10 or higher, or your report says plainly where it falls short ([critique.md](references/critique.md)).
 - It lands as PRs the team can review, with a short update they can paste.
