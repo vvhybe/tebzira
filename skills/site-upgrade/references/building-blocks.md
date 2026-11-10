@@ -7,7 +7,7 @@ Build it **still** first: tokens, the hero at desktop and phone width, then each
 ## Contents
 
 - Hero and navigation: cinematic hero, adaptive navbar, phone menu, language switch
-- Telling the story: scroll story with pinned film, live preview button, walk-through countdown
+- Telling the story: scroll story with pinned film, live preview button, walk-through countdown, trail map, a minute the visitor can do
 - Showing the product: live UI tiles, interactive product demo, coverflow gallery with floating stats, spotlighting the differentiator
 - Company and B2B: catalog with real logos and lead prefill, problem-to-answer illustrations, honest comparison, own booking UI
 - Plans and pricing
@@ -94,6 +94,17 @@ A way to show how to reach a place, or any route through a story, that a yoga st
 - **Layers.** The art, then an SVG with the dotted trail and a solid walked line, then postcards, then the character.
 - **Postcards.** One short silent loop per landmark, cropped clear of any burned-in caption, playing only while on screen. Outer columns on desktop, so the trail stays clear; towards the middle on phones, where the map is cropped.
 - **The character** keeps pace with the page (motion.md § 4) and says the owner's real words in a bubble at each stop.
+
+### A minute the visitor can do
+
+A short guided experience in the brand's own language (a breath for a yoga studio, a focus timer for a study app). It can become the site's signature, so it is not a menu item:
+
+- **Its own page** in every language, with metadata, a social card made from its real end state, a sitemap entry, a short text below it saying what it is, and links from the menu and the footer.
+- **A door on the home page** that shows the start of it alive, with a hint of the effect under the visitor's hand.
+- **The 404**: being lost is the start, and the way back appears at the end. Read the language from the address, since that page has no layout around it.
+- **A way to give it**: the Web Share API, falling back to copying the link.
+- **Sound** only after the visitor's click, with a visible mute that is remembered (media.md § 11). A started experience keeps running when animations are paused.
+- **Copy the owner approves.** A breathing claim is a health claim; keep it mild and have it checked.
 
 ## Showing the product
 

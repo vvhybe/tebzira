@@ -39,6 +39,7 @@ To capture one section without a fixed navbar over it, add `[data-shot-hide]{dis
 Check every section in each of these:
 
 - **Widths:** 1440 (desktop), **1920×710** (a short laptop window; it exposes bottom-of-page reveal bugs), 390 and 320 (phones). Add 768 when the layout changes there.
+- **Phone heights:** a 390×844 viewport has none of a phone browser's toolbars. Also run 375×553 (an SE in Safari), 360×640, 393×660 and 402×756, and measure the clearances between the headline, the mark and the call to action (gotchas.md § Rendering and layout). An owner's phone screenshot is the test you failed.
 - **Themes:** light and dark if the site has both (set the stored theme, then reload).
 - **Reduced motion:** `page.emulateMedia({ reducedMotion: 'reduce' })`. Intro targets must be visible, no video may autoplay, tiles and counters show their end state.
 - **Languages:** every locale's home page and one inner page, looking for overflow from longer words.
@@ -100,3 +101,6 @@ cp .env "$B/.env" 2>/dev/null || true     # when the build reads env values (pri
 - **For real timing,** launch your own Chromium from the `playwright-core` in the npx cache: `chromium.launch({ headless: true, args: ['--disable-frame-rate-limit'] })`. Hold gestures, timed reveals and transitions only behave there.
 - **For WebGL,** use `--use-angle=swiftshader --enable-webgl --ignore-gpu-blocklist --enable-unsafe-swiftshader` and drop the frame-limit flag, or screenshots time out. Software rendering proves correctness, never smoothness. Say so in the report.
 - **Count the scroll.** Wheel ticks from the first screen to the first new content. More than about 15 is too many.
+- **List where the visitor can stop.** In every pinned or scroll-driven scene, screenshot each position a visitor might rest on, including just before and after each hand-over. A half-blended frame at rest is a defect (gotchas.md § Motion and media).
+- **Speed up timed experiences** instead of waiting them out: an init script that scales `performance.now()` and the `requestAnimationFrame` timestamp by 30 runs a one-minute sequence in two seconds.
+- **Sound can't be heard here.** Check that the `AudioContext` is running after the click and that the mute toggle's state and stored choice are right; the owner listens on a device.

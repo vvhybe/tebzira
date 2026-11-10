@@ -37,6 +37,13 @@ Owners rarely speak in design terms. They say "not enough spice" or "it looks ch
 | "It's a joint SVG, that's cheap these days." | A drawn character. | Real material: cut the person out of their own footage (media.md § 10). |
 | "The name is actually X." "Use the exact logo, not a miniature." | Brand details taken from a weak source or redrawn. | Go to the brand file and fix every instance. Drop any copy built on the wrong reading. |
 | A batch of screenshots with short notes | They are pointing at pixels. | Fix each one, then hunt the same class of defect elsewhere: the same images held two more. |
+| "A small overlap on mobile" (their phone's screenshot) | The layout was checked at a 390×844 viewport, not at the height a phone browser leaves. | Measure at 553 to 760 px tall and fix the coupling: something placed by height next to something sized by width (verification.md § 3). |
+| "The mark doesn't look like the original, at least the same flower and the same figure." | The header mark was cropped by its viewBox and recoloured. | Frame the whole mark from its bounding box, in its own colours, with a keyline for light grounds; regenerate the icons from it. |
+| "The accent color dominates the negative space." | Large flat areas in one brand color. | The brand's own geometry from the owner's other products, pooled in the open space and fading before the words, slow and faint (motion.md § 4). |
+| "People who want to stay and watch get an in-between frame." | The clean state of a scroll scene exists only at its last pixel. | A pinned stop after the hand-over, and a timed fade at a threshold instead of a scroll-tied blend. |
+| "Don't let this masterpiece be shy in the menu." | A signature hidden behind a link. | Its own page with SEO, a door on the home page, and the 404 (building-blocks.md § A minute the visitor can do). |
+| "We're missing sound for this." (after "creepy noise" elsewhere) | Sound inside an experience the visitor starts is welcome; ambient sound is not. | Sound made in the browser, started by their click, with a visible mute that is remembered (media.md § 11). |
+| "What's the point of that sticky line?" | A component that outlived the concept it was built for. | Keep its best idea in the smallest form (a scroll sensor that appears only when rushed) or remove it. |
 
 ## 2. How owners like to work
 
@@ -51,6 +58,8 @@ Owners rarely speak in design terms. They say "not enough spice" or "it looks ch
 - **Ideas arrive mid-build, and they are often better than yours.** A hand-drawn trail map with a tiny walking character came in the middle of a turn. Say yes in one line, fold it in, keep going.
 - **"Tell me if you need a tool."** Answer with one recommendation, the exact file, source and size or price, and a no-tool fallback. Check balances first; a connected service may have no credits.
 - **Numbered questions at the end of a report** come back as numbered answers within minutes.
+- **"I'll leave it to you."** When the owner hands you a decision, make it, give the reason in a sentence, and keep it reversible.
+- **They review previews on their phone.** Send the preview link with the exact addresses to try (the page, a made-up address for the 404, a `?sky=` hour); Cloudflare cuts branch aliases to 28 characters.
 
 ## 3. What owners approved
 
@@ -67,3 +76,7 @@ Owners rarely speak in design terms. They say "not enough spice" or "it looks ch
 - The logo standing in a live scene built from art the owner already had.
 - The real person, cut out of their own film, walking a hand-drawn map, with their own words in speech bubbles.
 - A 404 that is a tiny game in the site's own world.
+- A one-minute guided breath as the signature: the logo breathing over a ground that goes from noise to clarity, with its own sound, its own page, a door on the home page, and the 404.
+- The hero's sky following the real hour and place: the sun where it is, the moon in its phase.
+- The brand's sacred geometry in flat sections, faint and slow: "that's the right portion".
+- A scroll sensor that says "gently" only when the visitor rushes.
